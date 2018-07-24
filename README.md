@@ -1,8 +1,6 @@
 # Creatable
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/creatable`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A mixin that adds a `create` method to any class.
 
 ## Installation
 
@@ -22,7 +20,24 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+``` ruby
+class A
+    # extend the class (not include)
+    extend Creatable
+
+    # add an attribute (will default to accesor)
+    attribute name: 'an_attribute'
+
+    # add the reader method only
+    attribute name: 'an_attribute', type: 'reader'
+
+    # add the writer method only
+    attribute name: 'an_attribute', type: 'writer'
+
+    # Restrict the type you can assign to this attribute
+    attribute name: 'an_attribute', type: 'accessor', kind_of: String
+end
+```
 
 ## Development
 
