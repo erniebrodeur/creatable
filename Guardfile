@@ -81,13 +81,17 @@ guard :rspec, cmd: 'bundle exec rspec' do
   end
 end
 
-guard :rubocop do
-  watch(/.+\.rb$/)
-  watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
+unless ENV["DISABLE_RUBOCOP"] == 'true'
+  guard :rubocop do
+    watch(/.+\.rb$/)
+    watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
+  end
 end
 
-guard 'yard' do
-  watch(%r{app\/.+\.rb})
-  watch(%r{lib\/.+\.rb})
-  watch(%r{ext\/.+\.c})
+unless ENV["DISABLE_YARD"] == 'true'
+  guard 'yard' do
+    watch(%r{app\/.+\.rb})
+    watch(%r{lib\/.+\.rb})
+    watch(%r{ext\/.+\.c})
+  end
 end
