@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Ernie Brodeur']
   spec.email         = ['ebrodeur@ujami.net']
 
-  spec.summary       = 'FU: Write a short summary, because RubyGems requires one.'
-  spec.description   = 'FU: Write a longer description or delete this line.'
-  spec.homepage      = "FU: Put your gem's website or public repo URL here."
+  spec.summary       = 'a mixin that adds a create method to classes.'
+  spec.description   = 'Mixin adds create, and attribute methods.  Use these instead of attr_ and the #create method is automatically generated.'
+  spec.homepage      = "https://github.com/erniebrodeur/creatable"
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
