@@ -12,11 +12,11 @@ gem 'creatable'
 
 And then execute:
 
-    $ bundle
+    bundle
 
 Or install it yourself as:
 
-    $ gem install creatable
+    gem install creatable
 
 ## Usage
 
