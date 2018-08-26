@@ -1,5 +1,7 @@
 # Creatable
 
+[![CodeFactor](https://www.codefactor.io/repository/github/erniebrodeur/creatable/badge)](https://www.codefactor.io/repository/github/erniebrodeur/creatable)
+
 A mixin that adds a `create` method to any class.
 
 ## Installation
