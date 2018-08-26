@@ -1,5 +1,7 @@
 # Creatable
 
+[![CodeFactor](https://www.codefactor.io/repository/github/erniebrodeur/creatable/badge)](https://www.codefactor.io/repository/github/erniebrodeur/creatable)
+
 A mixin that adds a `create` method to any class.
 
 ## Installation
@@ -12,11 +14,11 @@ gem 'creatable'
 
 And then execute:
 
-    $ bundle
+    bundle
 
 Or install it yourself as:
 
-    $ gem install creatable
+    gem install creatable
 
 ## Usage
 
