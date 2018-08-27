@@ -34,7 +34,7 @@ module Creatable
 
     def create(args = {})
       object = new
-      attributes.each { |l| object.send "#{l}=".to_sym, args[l] }
+      attributes.each { |l| object.instance_variable_set "@#{l}", args[l] }
       object
     end
   end
