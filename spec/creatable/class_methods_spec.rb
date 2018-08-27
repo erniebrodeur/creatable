@@ -1,6 +1,8 @@
 require 'spec_helper'
 module Creatable
   describe ClassMethods do
+    subject { Harness }
+
     before do
       class Harness
         include Creatable
@@ -8,8 +10,6 @@ module Creatable
         attribute name: 'an_attribute', type: 'accessor', kind_of: String
       end
     end
-
-    subject { Harness }
 
     let(:described_class) { Harness }
     let(:name) { 'an_attribute' }

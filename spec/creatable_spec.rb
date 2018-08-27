@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Creatable do
+  subject { Harness }
+
   before do
     class Harness
       include Creatable
@@ -10,7 +12,6 @@ describe Creatable do
   end
 
   # makes our tests sensable, even though we changed what exactly we are tracking
-  subject { Harness }
 
   let(:described_class) { Harness }
   let(:new_obj) { described_class.new }
