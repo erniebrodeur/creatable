@@ -1,3 +1,3 @@
 module Creatable
-  VERSION = '1.0.1'.freeze # VERSION
+  VERSION = '2.0.0'.freeze # VERSION
 end
