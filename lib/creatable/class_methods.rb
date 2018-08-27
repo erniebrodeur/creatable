@@ -16,8 +16,7 @@ module Creatable
     # @raise [ArgumentError] if name is not supplied
     # @raise [ArgumentError] if the type is not accessor, reader, or writer
     # @return [Void]
-    def attribute(name: nil, type: nil, kind_of: nil)
-      type ||= 'accessor'
+    def attribute(name: nil, type: 'accesor', kind_of: nil)
       raise ArgumentError, 'name is a required parameter' unless name
       raise ArgumentError, "type must be of type: 'accessor', 'reader', or 'writer'" unless ['accessor', 'reader', 'writer'].include? type
 
@@ -29,11 +28,9 @@ module Creatable
 
       if ['accessor', 'writer'].include?(type)
         if kind_of.nil?
-          define_method "#{name}=" do |value|
-            instance_variable_set "@#{name}", value
-          end
+          define_method("#{name}=") { |value| instance_variable_set "@#{name}", value }
         else
-          define_method "#{name}=" do |value|
+          define_method("#{name}=") do |value|
             raise ArgumentError, "parameter #{name} (#{value.class}) is not a kind of (#{kind_of})" unless value.is_a?(kind_of) || value.nil?
             instance_variable_set "@#{name}", value
           end
