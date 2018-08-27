@@ -2,7 +2,7 @@ require 'spec_helper'
 module Creatable
   describe ClassMethods do
     before do
-      class ::Harness
+      class Harness
         include Creatable
 
         attribute name: 'an_attribute', type: 'accessor', kind_of: String
@@ -10,6 +10,7 @@ module Creatable
     end
 
     subject { Harness }
+
     let(:described_class) { Harness }
     let(:name) { 'an_attribute' }
     let(:type) { 'accessor' }
@@ -24,7 +25,7 @@ module Creatable
       it { expect(described_class).to respond_to(:create) }
     end
 
-    it { expect(new_obj).to be_a_kind_of Creatable}
+    it { expect(new_obj).to be_a_kind_of Creatable }
 
     describe "::attributes" do
       it { expect(new_obj.attributes).to be_a_kind_of Hash }

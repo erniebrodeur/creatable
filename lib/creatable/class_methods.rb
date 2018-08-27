@@ -1,10 +1,21 @@
 module Creatable
+  # Class methods that get mixed in.
   module ClassMethods
+    # Returns the list of attributes attatched to this object
+    # @return [Hash] the current attributes
     def attributes
       @attributes ||= {}
       @attributes
     end
 
+    # Replacement for attr_*   Will build the same getter/setter methods.
+    # will also include a kind_of check.
+    # @param [String] name name of the attribute
+    # @param [String] type accessor, reader, or writer
+    # @param [Class] kind_of class that this can be set too
+    # @raise [ArgumentError] if name is not supplied
+    # @raise [ArgumentError] if the type is not accessor, reader, or writer
+    # @return [Void]
     def attribute(name: nil, type: nil, kind_of: nil)
       type ||= 'accessor'
       raise ArgumentError, 'name is a required parameter' unless name
@@ -29,14 +40,17 @@ module Creatable
         end
       end
 
-      attributes.merge!({name: name, type: type, kind_of: kind_of})
+      attributes.merge!(name: name, type: type, kind_of: kind_of)
       nil
     end
 
+    # Create a new instance of a given object.   Allows you to pass in any attribute.
+    # @param [Hash] arg key/value pairs for existing attributes
+    # @return [Object] Newly created object
     def create(arg = {})
       object = new
       key, value = arg.flatten
-      attributes.each { |l| object.instance_variable_set "@#{key}", value  }
+      attributes.each { |_l| object.instance_variable_set "@#{key}", value }
       object
     end
   end
