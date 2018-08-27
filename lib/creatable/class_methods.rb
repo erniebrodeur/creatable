@@ -1,7 +1,7 @@
 module Creatable
   module ClassMethods
     def attributes
-      @attributes ||= []
+      @attributes ||= {}
       @attributes
     end
 
@@ -29,12 +29,14 @@ module Creatable
         end
       end
 
-      attributes.push name.to_sym
+      attributes.merge!({name: name, type: type, kind_of: kind_of})
+      nil
     end
 
-    def create(args = {})
+    def create(arg = {})
       object = new
-      attributes.each { |l| object.instance_variable_set "@#{l}", args[l] }
+      key, value = arg.flatten
+      attributes.each { |l| object.instance_variable_set "@#{key}", value  }
       object
     end
   end
