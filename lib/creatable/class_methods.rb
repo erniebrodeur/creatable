@@ -2,12 +2,13 @@ module Creatable
   # Class methods that get mixed in.
   module ClassMethods
     # Returns the list of attributes attatched to this object
-    # @return [Hash] the current attributes
+    # @return [Array] the current attributes
     def attributes
-      @attributes ||= {}
-      @attributes
+      @attributes ||= []
     end
 
+    # TODO: new spec to cover the 'type' setting (including default).
+    # TODO: new spec to assure kind_of behaves properly.
     # Replacement for attr_*   Will build the same getter/setter methods.
     # will also include a kind_of check.
     # @param [String] name name of the attribute
@@ -16,7 +17,7 @@ module Creatable
     # @raise [ArgumentError] if name is not supplied
     # @raise [ArgumentError] if the type is not accessor, reader, or writer
     # @return [Void]
-    def attribute(name: nil, type: 'accesor', kind_of: nil)
+    def attribute(name: nil, type: 'accessor', kind_of: nil)
       raise ArgumentError, 'name is a required parameter' unless name
       raise ArgumentError, "type must be of type: 'accessor', 'reader', or 'writer'" unless ['accessor', 'reader', 'writer'].include? type
 
@@ -36,18 +37,20 @@ module Creatable
           end
         end
       end
-
-      attributes.merge!(name: name, type: type, kind_of: kind_of)
+      attributes.push({name: name, type: type, kind_of: kind_of})
       nil
     end
 
+    # TODO: enhance tests here, around storing mulitple attributes.
     # Create a new instance of a given object.   Allows you to pass in any attribute.
-    # @param [Hash] arg key/value pairs for existing attributes
+    # @param [Hash] args key/value pairs for existing attributes
     # @return [Object] Newly created object
-    def create(arg = {})
+    def create(args = {})
       object = new
-      key, value = arg.flatten
-      attributes.each { |_l| object.instance_variable_set "@#{key}", value }
+      names = attributes.map {|e| e[:name].to_sym}
+      args.each do |k,v|
+        object.instance_variable_set "@#{k}".to_sym, v if names.include? k
+      end
       object
     end
   end
