@@ -7,8 +7,6 @@ module Creatable
       @attributes ||= []
     end
 
-    # TODO: new spec to cover the 'type' setting (including default).
-    # TODO: new spec to assure kind_of behaves properly.
     # Replacement for attr_*   Will build the same getter/setter methods.
     # will also include a kind_of check.
     # @param [String] name name of the attribute
@@ -37,11 +35,16 @@ module Creatable
           end
         end
       end
-      attributes.push(name: name, type: type, kind_of: kind_of)
+
+      if attributes.map { |e| e[:name]}.include? name
+        attributes.delete_if { |e| e[:name] == name}
+        attributes.push(name: name, type: type, kind_of: kind_of)
+      else
+        attributes.push(name: name, type: type, kind_of: kind_of)
+      end
       nil
     end
 
-    # TODO: enhance tests here, around storing mulitple attributes.
     # Create a new instance of a given object.   Allows you to pass in any attribute.
     # @param [Hash] args key/value pairs for existing attributes
     # @return [Object] Newly created object

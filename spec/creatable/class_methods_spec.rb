@@ -28,13 +28,13 @@ module Creatable
     it { expect(new_obj).to be_a_kind_of Creatable }
 
     describe "::attributes" do
-      it { expect(new_obj.attributes).to be_a_kind_of Hash }
+      it { expect(new_obj.attributes).to be_a_kind_of Array }
     end
 
     describe "::attribute" do
       context "when the parameter name is not a symbol" do
         it "is expected to convert it to symbol" do
-          expect(new_obj.attributes).to eq params
+          expect(new_obj.attributes).to eq [params]
         end
       end
 
@@ -62,9 +62,17 @@ module Creatable
         it { expect { described_class.attribute params }.to raise_error(ArgumentError, "type must be of type: 'accessor', 'reader', or 'writer'") }
       end
 
+      context "when the attribute name already exists" do
+        it "is expected to overwrite the existing attribute" do
+          described_class.attribute params
+          described_class.attribute params
+          expect(described_class.attributes).to eq [params]
+        end
+      end
+
       it "is expected to add the value to attributes" do
         described_class.attribute params
-        expect(described_class.attributes).to eq params
+        expect(described_class.attributes).to eq [params]
       end
     end
 

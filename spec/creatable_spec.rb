@@ -11,8 +11,6 @@ describe Creatable do
     end
   end
 
-  # makes our tests sensable, even though we changed what exactly we are tracking
-
   let(:described_class) { Harness }
   let(:new_obj) { described_class.new }
   let(:params) { { name: 'an_attribute', type: 'accessor', kind_of: String } }
@@ -22,7 +20,7 @@ describe Creatable do
 
   describe "::attributes" do
     it "is expected to return the attributes" do
-      expect(new_obj.attributes).to eq params
+      expect(new_obj.attributes).to eq [params]
     end
   end
 end
