@@ -36,8 +36,8 @@ module Creatable
         end
       end
 
-      if attributes.map { |e| e[:name]}.include? name
-        attributes.delete_if { |e| e[:name] == name}
+      if attributes.map { |e| e[:name] }.include? name
+        attributes.delete_if { |e| e[:name] == name }
         attributes.push(name: name, type: type, kind_of: kind_of)
       else
         attributes.push(name: name, type: type, kind_of: kind_of)
