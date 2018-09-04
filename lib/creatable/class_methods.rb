@@ -37,7 +37,7 @@ module Creatable
           end
         end
       end
-      attributes.push({name: name, type: type, kind_of: kind_of})
+      attributes.push(name: name, type: type, kind_of: kind_of)
       nil
     end
 
@@ -47,8 +47,8 @@ module Creatable
     # @return [Object] Newly created object
     def create(args = {})
       object = new
-      names = attributes.map {|e| e[:name].to_sym}
-      args.each do |k,v|
+      names = attributes.map { |e| e[:name].to_sym }
+      args.each do |k, v|
         object.instance_variable_set "@#{k}".to_sym, v if names.include? k
       end
       object
