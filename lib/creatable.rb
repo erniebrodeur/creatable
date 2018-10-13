@@ -15,4 +15,10 @@ module Creatable
   def attributes
     self.class.attributes
   end
+
+  # Returns the names of the attributes.
+  # @return [Array] list of names of the attributes
+  def attribute_names
+    self.class.attributes.map { |a| a[:name] }
+  end
 end

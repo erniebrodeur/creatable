@@ -23,4 +23,10 @@ describe Creatable do
       expect(new_obj.attributes).to eq [params]
     end
   end
+
+  describe "::attribute_names" do
+    it "is expected to return the attribute names" do
+      expect(new_obj.attribute_names).to eq [params[:name]]
+    end
+  end
 end
