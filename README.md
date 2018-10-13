@@ -27,7 +27,7 @@ class A
     # extend the class (not include)
     extend Creatable
 
-    # add an attribute (will default to accesor)
+    # add an attribute (will default to accessor)
     attribute name: 'an_attribute'
 
     # add the reader method only
@@ -38,6 +38,9 @@ class A
 
     # Restrict the type you can assign to this attribute
     attribute name: 'an_attribute', type: 'accessor', kind_of: String
+
+    # You can assign multiple types
+    attribute name: 'an_attribute', type: 'accessor', kind_of: [String, Array, nil]
 end
 ```
 
@@ -49,4 +52,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/erniebrodeur/creatable.
+Bug reports and pull requests are welcome on GitHub at [creatable](https://github.com/erniebrodeur/creatable).
