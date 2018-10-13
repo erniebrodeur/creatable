@@ -17,6 +17,7 @@ module Creatable
     let(:type) { 'accessor' }
     let(:kind_of) { String }
     let(:params) { { name: name, type: type, kind_of: kind_of } }
+    let(:expected_params) { { name: name, type: type, kind_of: [kind_of] } }
 
     let(:new_obj) { described_class.new }
 
@@ -35,7 +36,7 @@ module Creatable
     describe "::attribute" do
       context "when the parameter name is not a symbol" do
         it "is expected to convert it to symbol" do
-          expect(new_obj.attributes).to eq [params]
+          expect(new_obj.attributes).to eq [expected_params]
         end
       end
 
@@ -67,13 +68,13 @@ module Creatable
         it "is expected to overwrite the existing attribute" do
           described_class.attribute params
           described_class.attribute params
-          expect(described_class.attributes).to eq [params]
+          expect(described_class.attributes).to eq [expected_params]
         end
       end
 
       it "is expected to add the value to attributes" do
         described_class.attribute params
-        expect(described_class.attributes).to eq [params]
+        expect(described_class.attributes).to eq [expected_params]
       end
     end
 
@@ -106,7 +107,13 @@ module Creatable
         it { expect { new_obj.an_attribute = :not_a_string }.to raise_error(ArgumentError, 'parameter an_attribute (Symbol) is not a kind of (String)') }
       end
 
-      context "when the value kind_of is nil" do
+      context "when kind_of is not an array" do
+        it "is expected to put kind_of in an array" do
+          expect(new_obj.attributes.first[:kind_of]).to eq [String]
+        end
+      end
+
+      context "when the value of kind_of is nil" do
         let(:kind_of) { nil }
 
         before { described_class.attribute params }

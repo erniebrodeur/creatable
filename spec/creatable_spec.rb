@@ -14,6 +14,7 @@ describe Creatable do
   let(:described_class) { Harness }
   let(:new_obj) { described_class.new }
   let(:params) { { name: 'an_attribute', type: 'accessor', kind_of: String } }
+  let(:expected_params) { { name: 'an_attribute', type: 'accessor', kind_of: [String] } }
 
   it { is_expected.to be_a_kind_of Creatable } # rubocop: disable RSpec/DescribedClass
   it { is_expected.to respond_to(:attributes).with(0).arguments }
@@ -22,7 +23,7 @@ describe Creatable do
 
   describe "::attributes" do
     it "is expected to return the attributes" do
-      expect(new_obj.attributes).to eq [params]
+      expect(new_obj.attributes).to eq [expected_params]
     end
   end
 

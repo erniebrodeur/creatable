@@ -25,6 +25,7 @@ module Creatable
         if kind_of.nil?
           generate_writer(name)
         else
+          kind_of = [kind_of] unless kind_of.is_a? Array
           generate_required_writer(name, kind_of)
         end
       end
@@ -61,7 +62,7 @@ module Creatable
 
     def generate_required_writer(name, kind_of)
       define_method("#{name}=") do |value|
-        raise ArgumentError, "parameter #{name} (#{value.class}) is not a kind of (#{kind_of})" unless value.is_a?(kind_of) || value.nil?
+        raise(ArgumentError, "parameter #{name} (#{value.class}) is not a kind of (#{kind_of.join})") unless kind_of.include?(value.class)
 
         instance_variable_set "@#{name}", value
       end
