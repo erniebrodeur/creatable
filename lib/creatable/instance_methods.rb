@@ -1,6 +1,6 @@
 module Creatable
   # Class methods that get mixed in.
-  module ClassMethods
+  module InstanceMethods
     # Returns the list of attributes attatched to this object
     # @return [Array] the current attributes
     def attributes
