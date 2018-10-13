@@ -1,4 +1,5 @@
 require 'spec_helper'
+
 module Creatable
   describe ClassMethods do
     subject { Harness }
@@ -76,6 +77,10 @@ module Creatable
       end
     end
 
+    describe "::attributes" do
+      it { expect(new_obj.attributes).to be_a_kind_of Array }
+    end
+
     describe "::creatable" do
       let(:new_obj) { described_class.create an_attribute: 'something' }
 
@@ -90,14 +95,13 @@ module Creatable
       end
     end
 
-    describe "a created method" do
+    describe "::generated_reader_method" do
       it "is expected to return the instance_variable of the same name" do
-        new_obj = described_class.create an_attribute: 'something'
         expect(new_obj.an_attribute).to eq new_obj.instance_variable_get :@an_attribute
       end
     end
 
-    describe "a created method=" do
+    describe "::generated_writer_method=" do
       context "when the supplied value does not match kind_of" do
         it { expect { new_obj.an_attribute = :not_a_string }.to raise_error(ArgumentError, 'parameter an_attribute (Symbol) is not a kind of (String)') }
       end

@@ -21,4 +21,14 @@ module Creatable
   def attribute_names
     self.class.attributes.map { |a| a[:name] }
   end
+
+  # Returns the settings of all attributes.
+  # @return [Hash] k/v pairs of the current class attributes
+  def to_parameters
+    h = {}
+    attribute_names.each do |name|
+      h.store name, instance_variable_get("@#{name}")
+    end
+    h
+  end
 end
