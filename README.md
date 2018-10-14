@@ -20,12 +20,12 @@ Or install it yourself as:
 
     gem install creatable
 
-## Usage
+## Class Usage
 
 ``` ruby
 class A
-    # extend the class (not include)
-    extend Creatable
+    # include the class
+    include Creatable
 
     # add an attribute (will default to accessor)
     attribute name: 'an_attribute'
@@ -42,6 +42,21 @@ class A
     # You can assign multiple types
     attribute name: 'an_attribute', type: 'accessor', kind_of: [String, Array, nil]
 end
+```
+
+## Instance Usage
+
+``` ruby
+    i = A.new
+
+    # a hash of the current attributes.
+    i.attributes
+
+    # an array of the names
+    i.attribute_names
+
+    # The current values of all attributes as a hash
+    i.to_parameters
 ```
 
 ## Development

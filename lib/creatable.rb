@@ -1,5 +1,5 @@
 require "creatable/version"
-require 'creatable/instance_methods'
+require 'creatable/class_methods'
 
 # Main module you include in your class
 module Creatable
@@ -7,7 +7,7 @@ module Creatable
   # @param [Object] object
   # @return [Void]
   def self.included(object)
-    object.extend InstanceMethods
+    object.extend IClassMethods
   end
 
   # Returns the hash of built attributes

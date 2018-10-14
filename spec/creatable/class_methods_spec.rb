@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Creatable
-  describe InstanceMethods do
+  describe ClassMethods do
     subject { Harness }
 
     before do
