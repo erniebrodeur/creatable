@@ -45,8 +45,11 @@ module Creatable
       object = new
       names = attributes.map { |e| e[:name].to_sym }
       args.each do |k, v|
-        object.instance_variable_set "@#{k}".to_sym, v if names.include? k
+        object.instance_variable_set "@#{k}".to_sym, v if names.include? k.to_sym
       end
+
+      yield(object) if block_given?
+
       object
     end
 

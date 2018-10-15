@@ -82,12 +82,18 @@ module Creatable
       it { expect(new_obj.attributes).to be_a_kind_of Array }
     end
 
-    describe "::creatable" do
+    describe "::create" do
       let(:new_obj) { described_class.create an_attribute: 'something' }
 
       context "when a parameter is supplied" do
         it "is expected to set the instance_value of name to the value supplied" do
           expect(new_obj.an_attribute).to eq 'something'
+        end
+      end
+
+      context "when a block is supplied" do
+        it "is expected to call the block last in create" do
+          expect { |b| described_class.create(&b) }.to yield_control
         end
       end
 

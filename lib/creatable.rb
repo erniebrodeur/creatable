@@ -7,7 +7,7 @@ module Creatable
   # @param [Object] object
   # @return [Void]
   def self.included(object)
-    object.extend IClassMethods
+    object.extend ClassMethods
   end
 
   # Returns the hash of built attributes

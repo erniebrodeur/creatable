@@ -47,7 +47,12 @@ end
 ## Instance Usage
 
 ``` ruby
-    i = A.new
+    i = A.create an_attribute: 'this'
+
+    # pass a block to create for it to be processed during initialize
+    # note that you have to accept an argument in the block to get the object
+    # you want to change.
+    i = A.create(an_attribute: 'this') { |obj| obj.an_attribute = 'that' }
 
     # a hash of the current attributes.
     i.attributes
@@ -57,6 +62,9 @@ end
 
     # The current values of all attributes as a hash
     i.to_parameters
+
+    # creating a new object from parameters
+    A.create i.to_parameters
 ```
 
 ## Development
