@@ -43,7 +43,7 @@ module Creatable
       object = new
 
       attributes.each do |a|
-        next unless args.keys.include? a[:name].to_sym
+        next unless args.key?(a[:name].to_sym)
 
         value = args[a[:name].to_sym]
 
