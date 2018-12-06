@@ -41,20 +41,20 @@ module Creatable
     # @return [Object] Newly created object
     def create(args = {})
       object = new
-      # names = attributes.map { |e| e[:name].to_sym }
 
       attributes.each do |a|
+        next unless args.keys.include? a[:name].to_sym
+
         value = args[a[:name].to_sym]
-        next unless value
 
         if a[:block]
-          a[:block].call object
+          a[:block].call object, value
         else
           object.instance_variable_set "@#{a[:name]}".to_sym, value
         end
       end
 
-      yield object if block_given?
+      yield object, args if block_given?
       object
     end
 

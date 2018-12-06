@@ -39,7 +39,7 @@ describe Creatable::ClassMethods do
         expect do |b|
           described_class.attribute(params, &b)
           described_class.create(an_attribute: 'value')
-        end.to yield_control
+        end.to yield_with_args(a_kind_of(Harness), "value")
       end
     end
 
@@ -100,9 +100,7 @@ describe Creatable::ClassMethods do
     end
 
     context "when a block is supplied" do
-      it "is expected to call the block last in create" do
-        expect { |b| described_class.create(an_attribute: 'value', &b) }.to yield_control
-      end
+      it { expect { |b| described_class.create(an_attribute: 'value', &b) }.to yield_with_args(a_kind_of(Harness), a_kind_of(Hash)) }
     end
   end
 
