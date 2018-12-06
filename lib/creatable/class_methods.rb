@@ -15,7 +15,7 @@ module Creatable
     # @raise [ArgumentError] if name is not supplied
     # @raise [ArgumentError] if the type is not accessor, reader, or writer
     # @return [Void]
-    def attribute(name: nil, type: 'accessor', kind_of: nil)
+    def attribute(name: nil, type: 'accessor', kind_of: nil, &block)
       raise ArgumentError, 'name is a required parameter' unless name
       raise ArgumentError, "type must be of type: 'accessor', 'reader', or 'writer'" unless ['accessor', 'reader', 'writer'].include? type
 
@@ -30,11 +30,9 @@ module Creatable
         end
       end
 
-      if attributes.map { |e| e[:name] }.include? name
-        attributes.delete_if { |e| e[:name] == name }
-      end
+      attributes.delete_if { |e| e[:name] == name } if attributes.map { |e| e[:name] }.include? name
 
-      attributes.push(name: name, type: type, kind_of: kind_of)
+      attributes.push(name: name, type: type, kind_of: kind_of, block: block)
       nil
     end
 
@@ -43,13 +41,20 @@ module Creatable
     # @return [Object] Newly created object
     def create(args = {})
       object = new
-      names = attributes.map { |e| e[:name].to_sym }
-      args.each do |k, v|
-        object.instance_variable_set "@#{k}".to_sym, v if names.include? k.to_sym
+      # names = attributes.map { |e| e[:name].to_sym }
+
+      attributes.each do |a|
+        value = args[a[:name].to_sym]
+        next unless value
+
+        if a[:block]
+          a[:block].call object
+        else
+          object.instance_variable_set "@#{a[:name]}".to_sym, value
+        end
       end
 
-      yield(object) if block_given?
-
+      yield object if block_given?
       object
     end
 
