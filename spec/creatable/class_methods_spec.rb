@@ -94,6 +94,20 @@ describe Creatable::ClassMethods do
     end
 
     context "when a parameter is supplied" do
+      it 'is expected to accept a symbol as key' do
+        obj = described_class.create(an_attribute: 'something')
+        expect(obj.an_attribute).to eq 'something'
+      end
+
+      it 'is expected to accept a string as key' do
+        obj = described_class.create("an_attribute" => 'something')
+        expect(obj.an_attribute).to eq 'something'
+      end
+      it 'is expected fix malformed keys begining with ":" like ":this"' do
+        obj = described_class.create(":an_attribute" => 'something')
+        expect(obj.an_attribute).to eq 'something'
+      end
+
       it "is expected to set the instance_value of name to the value supplied" do
         expect(new_obj.an_attribute).to eq 'something'
       end
