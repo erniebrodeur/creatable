@@ -42,19 +42,22 @@ module Creatable
     def create(args = {})
       object = new
 
-      attributes.each do |a|
-        next unless args.keys.include? a[:name].to_sym
+      fixed_args = {}
+      args.each { |k, v| fixed_args.store(fix_key(k), v) }
 
-        value = args[a[:name].to_sym]
+      attributes.each do |a|
+        next unless fixed_args.key? a[:name].to_sym
+
+        value = fixed_args[a[:name].to_sym]
 
         if a[:block]
           a[:block].call object, value
         else
-          object.instance_variable_set "@#{a[:name]}".to_sym, value
+          object.instance_variable_set "@#{a[:name].to_sym}", value
         end
       end
 
-      yield object, args if block_given?
+      yield object, fixed_args if block_given?
       object
     end
 
@@ -74,6 +77,11 @@ module Creatable
 
         instance_variable_set "@#{name}", value
       end
+    end
+
+    def fix_key(key)
+      key = key[1..-1] if key.is_a?(String) && key.start_with?(":")
+      key.to_sym
     end
   end
 end

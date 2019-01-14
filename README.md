@@ -66,6 +66,10 @@ end
     # creating a new object from parameters
     A.create i.to_parameters
 ```
+## Usage notes
+
+- key can be in several formats: 'key', :key, and ':key' will all be accepted.
+- if you supply a `block` of code, it will be executed right before `.create` returns.
 
 ## Development
 
